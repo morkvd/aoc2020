@@ -237,15 +237,12 @@ defmodule Day1 do
       |> Enum.filter(&is_result/1)
     end)
     |> Enum.filter(&is_result/1)
+    |> fn [ [result: x ] | _ ] -> x end.()
   end
 
-  def is_result(x) do
-    case x do
-      [result: _] -> true
-      {:result, _} -> true
-      _ -> false
-    end
-  end
+  def is_result([result: _]), do: true
+  def is_result({:result, _}), do: true
+  def is_result(_), do: false
 
   def star2 do
     indexed_ints = clean_input(@input)
@@ -260,5 +257,6 @@ defmodule Day1 do
         sums_to_2020.(a, b, c) do
       {{a, i}, {b, j}, {c, k}, a * b * c}
     end
+    |> fn [ {_, _, _, answer} | _ ] -> answer end.()
   end
 end
